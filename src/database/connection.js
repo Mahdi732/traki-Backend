@@ -4,7 +4,7 @@ class DBConnection {
   #mongoUri;
 
   constructor () {
-    this.#mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/fleet';
+    this.#mongoUri = process.env.MONGO_URI;
   }
 
   async connect () {

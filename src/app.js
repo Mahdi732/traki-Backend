@@ -1,9 +1,11 @@
+import 'dotenv/config'
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import authRouter from './routes/auth.routes.js';
+import truckRouter from './routes/truck.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import DBConnection from './database/connection.js';
 
@@ -61,6 +63,7 @@ class App {
 
     routesConfiguration() {
         this.#server.use('/api/auth', authRouter);
+        this.#server.use('/api/trucks', truckRouter);
     }
 }
 
