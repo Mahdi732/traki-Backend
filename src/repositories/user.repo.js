@@ -19,6 +19,10 @@ class UserRepository {
     return this.#model.findById(id);
   }
 
+  async findAll(filter = {}, options = {}) {
+    return this.#model.find(filter, { passwordHash: 0 }, options);
+  }
+
   async updateById(id, update, options = { new: true }) {
     return this.#model.findByIdAndUpdate(id, update, options);
   }
