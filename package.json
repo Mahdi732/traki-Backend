@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "start": "node server.js",
     "dev": "npx nodemon server.js"
   },
@@ -15,6 +16,7 @@
   "dependencies": {
     "axios": "^1.13.2",
     "bcrypt": "^5.0.0",
+    "pdfkit": "^0.13.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

@@ -6,6 +6,11 @@ import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import authRouter from './routes/auth.routes.js';
 import truckRouter from './routes/truck.routes.js';
+import tripRouter from './routes/trip.routes.js';
+import trailerRouter from './routes/trailer.routes.js';
+import tireRouter from './routes/tire.routes.js';
+import fuelLogRouter from './routes/fuellog.routes.js';
+import driversRouter from './routes/drivers.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import DBConnection from './database/connection.js';
 
@@ -49,7 +54,7 @@ class App {
             await DBConnection.connect();
             console.log('done!');
 
-            const port = process.env.PORT;
+            const port = process.env.PORT || 3000;
             this.#server.listen(port, () => {
                 this.#serverRunning = true;
                 console.log(`Server listening on port ${port}`);
@@ -64,6 +69,11 @@ class App {
     routesConfiguration() {
         this.#server.use('/api/auth', authRouter);
         this.#server.use('/api/trucks', truckRouter);
+        this.#server.use('/api/trips', tripRouter);
+        this.#server.use('/api/trailers', trailerRouter);
+        this.#server.use('/api/tires', tireRouter);
+        this.#server.use('/api/fuellogs', fuelLogRouter);
+        this.#server.use('/api/drivers', driversRouter);
     }
 }
 
