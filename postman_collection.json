@@ -1,0 +1,123 @@
+{
+  "info": {
+    "name": "Traki Backend - Collection (Cookie Auth - Option B)",
+    "_postman_id": "traki-backend-collection-v2",
+    "description": "httpOnly cookie authentication - tokens NOT in headers, managed by browser",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"secret123\",\n  \"role\": \"ADMIN\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/auth/register", "host": ["{{baseUrl}}"], "path": ["api","auth","register"] }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"secret123\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/login", "host": ["{{baseUrl}}"], "path": ["api","auth","login"] }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/auth/logout", "host": ["{{baseUrl}}"], "path": ["api","auth","logout"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trucks",
+      "item": [
+        {
+          "name": "Create Truck",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"plateNumber\": \"ABC-1234\",\n  \"vin\": \"1HGCM82633A004352\",\n  \"make\": \"Volvo\",\n  \"model\": \"FH16\",\n  \"year\": 2020,\n  \"capacity\": 12000,\n  \"status\": \"ACTIVE\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/trucks", "host": ["{{baseUrl}}"], "path": ["api","trucks"] }
+          }
+        },
+        { "name": "List Trucks", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trucks", "host": ["{{baseUrl}}"], "path": ["api","trucks"] } } },
+        { "name": "Get Truck by ID", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trucks/{{truckId}}", "host": ["{{baseUrl}}"], "path": ["api","trucks","{{truckId}}"] } } },
+        { "name": "Update Truck", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"INACTIVE\"\n}" }, "url": { "raw": "{{baseUrl}}/api/trucks/{{truckId}}", "host": ["{{baseUrl}}"], "path": ["api","trucks","{{truckId}}"] } } },
+        { "name": "Delete Truck", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/trucks/{{truckId}}", "host": ["{{baseUrl}}"], "path": ["api","trucks","{{truckId}}"] } } }
+      ]
+    },
+    {
+      "name": "Trips",
+      "item": [
+        {
+          "name": "Create Trip",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Delivery 001\",\n  \"description\": \"Warehouse to Client A\",\n  \"truck\": \"{{truckId}}\",\n  \"driver\": \"{{driverId}}\",\n  \"origin\": \"Warehouse\",\n  \"destination\": \"Client A\",\n  \"plannedStart\": \"2025-12-20T08:00:00Z\",\n  \"plannedEnd\": \"2025-12-20T18:00:00Z\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/trips", "host": ["{{baseUrl}}"], "path": ["api","trips"] }
+          }
+        },
+        { "name": "List Trips (Admin)", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trips", "host": ["{{baseUrl}}"], "path": ["api","trips"] } } },
+        { "name": "My Trips (Driver)", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trips/my", "host": ["{{baseUrl}}"], "path": ["api","trips","my"] } } },
+        { "name": "Get Trip", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api","trips","{{tripId}}"] } } },
+        { "name": "Update Trip", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\",\n  \"startKm\": 120000\n}" }, "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api","trips","{{tripId}}"] } } },
+        { "name": "Delete Trip", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}", "host": ["{{baseUrl}}"], "path": ["api","trips","{{tripId}}"] } } },
+        { "name": "Download Trip (PDF stub)", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trips/{{tripId}}/download", "host": ["{{baseUrl}}"], "path": ["api","trips","{{tripId}","download"] } } }
+      ]
+    },
+    {
+      "name": "Trailers",
+      "item": [
+        { "name": "Create Trailer", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"plateNumber\": \"TR-100\",\n  \"vin\": \"VINTR123456\",\n  \"make\": \"Krone\",\n  \"model\": \"Cool\",\n  \"year\": 2018,\n  \"capacity\": 20000\n}" }, "url": { "raw": "{{baseUrl}}/api/trailers", "host": ["{{baseUrl}}"], "path": ["api","trailers"] } } },
+        { "name": "List Trailers", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trailers", "host": ["{{baseUrl}}"], "path": ["api","trailers"] } } },
+        { "name": "Get Trailer", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/trailers/{{trailerId}}", "host": ["{{baseUrl}}"], "path": ["api","trailers","{{trailerId}}"] } } },
+        { "name": "Update Trailer", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"INACTIVE\"\n}" }, "url": { "raw": "{{baseUrl}}/api/trailers/{{trailerId}}", "host": ["{{baseUrl}}"], "path": ["api","trailers","{{trailerId}}"] } } },
+        { "name": "Delete Trailer", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/trailers/{{trailerId}}", "host": ["{{baseUrl}}"], "path": ["api","trailers","{{trailerId}}"] } } }
+      ]
+    },
+    {
+      "name": "Tires",
+      "item": [
+        { "name": "Create Tire", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"serialNumber\": \"SN-001\",\n  \"position\": \"FRONT_LEFT\",\n  \"truck\": \"{{truckId}}\",\n  \"installedAtKm\": 120000\n}" }, "url": { "raw": "{{baseUrl}}/api/tires", "host": ["{{baseUrl}}"], "path": ["api","tires"] } } },
+        { "name": "List Tires", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/tires", "host": ["{{baseUrl}}"], "path": ["api","tires"] } } },
+        { "name": "Get Tire", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/tires/{{tireId}}", "host": ["{{baseUrl}}"], "path": ["api","tires","{{tireId}}"] } } },
+        { "name": "Update Tire", "request": { "method": "PUT", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"status\": \"WORN\"\n}" }, "url": { "raw": "{{baseUrl}}/api/tires/{{tireId}}", "host": ["{{baseUrl}}"], "path": ["api","tires","{{tireId}}"] } } },
+        { "name": "Delete Tire", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/tires/{{tireId}}", "host": ["{{baseUrl}}"], "path": ["api","tires","{{tireId}}"] } } }
+      ]
+    },
+    {
+      "name": "FuelLogs",
+      "item": [
+        { "name": "Create Fuel Log", "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"truck\": \"{{truckId}}\",\n  \"driver\": \"{{driverId}}\",\n  \"date\": \"2025-12-12T10:00:00Z\",\n  \"volume\": 200,\n  \"km\": 120100,\n  \"notes\": \"Filled at Station X\"\n}" }, "url": { "raw": "{{baseUrl}}/api/fuellogs", "host": ["{{baseUrl}}"], "path": ["api","fuellogs"] } } },
+        { "name": "List Fuel Logs (Admin)", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/fuellogs", "host": ["{{baseUrl}}"], "path": ["api","fuellogs"] } } },
+        { "name": "Get Fuel Log", "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/fuellogs/{{logId}}", "host": ["{{baseUrl}}"], "path": ["api","fuellogs","{{logId}}"] } } },
+        { "name": "Delete Fuel Log", "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/fuellogs/{{logId}}", "host": ["{{baseUrl}}"], "path": ["api","fuellogs","{{logId}}"] } } }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:9849" },
+    { "key": "accessToken", "value": "" },
+    { "key": "truckId", "value": "" },
+    { "key": "driverId", "value": "" },
+    { "key": "tripId", "value": "" },
+    { "key": "trailerId", "value": "" },
+    { "key": "tireId", "value": "" },
+    { "key": "logId", "value": "" }
+  ]
+}
