@@ -35,9 +35,11 @@ class AuthController {
                 maxAge: 1000 * 60 * 60,
             }
             res.cookie('accessToken', accessToken, cookieOption);
-            res.json({user: {
+            res.json({
+                user: {
                     id: user._id,
                     email: user.email,
+                    name: user.name,
                     role: user.role
                 }
             });

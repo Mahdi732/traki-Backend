@@ -4,7 +4,7 @@ class DBConnection {
   #mongoUri;
 
   constructor () {
-    this.#mongoUri = process.env.MONGO_URI;
+    this.#mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/traki';
   }
 
   async connect () {

@@ -1,11 +1,11 @@
-import JWTService from '../services/JWTService.js';
+import Jwt from '../helpers/Jwt.js';
 import AuthService from '../services/AuthService.js';
 
 class AuthMiddleware {
     #jwtService;
     #authService;
 
-    constructor(jwtService = JWTService, authService = AuthService) {
+    constructor(jwtService = Jwt, authService = AuthService) {
         this.#jwtService = jwtService;
         this.#authService = authService;
         this.authenticate = this.authenticate.bind(this);
@@ -13,9 +13,9 @@ class AuthMiddleware {
 
     async authenticate(req, res, next) {
         try {
-            const header = req.headers.authorization;
-            if (!header || !header.startsWith('Bearer ')) return res.status(401).json({ message: 'Unauthorized' });
-            const token = header.split(' ')[1];
+            const token = req.cookies.accessToken;
+            if (!token) return res.status(401).json({ message: 'Unauthorized' });
+            
             const payload = this.#jwtService.verifyAccess(token);
             const user = await this.#authService.getUserById(payload.sub);
             if (!user) return res.status(401).json({ message: 'Unauthorized' });
